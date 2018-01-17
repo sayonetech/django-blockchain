@@ -99,3 +99,23 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+media/*
+*.pyc
+*.db
+.idea/*
+.DS_Store
+*.rdb
+*.log
+
+timelog.*
+
+
+*.pyo
+~*
+*~
+static/
+node_modules/
+geos-3.3.9/
+postgis-2.1.8/
+whoosh_index/
