@@ -107,6 +107,7 @@ media/*
 .DS_Store
 *.rdb
 *.log
+*.sqlite3
 
 timelog.*
 
