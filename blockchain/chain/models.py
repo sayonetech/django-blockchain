@@ -27,15 +27,14 @@ rand = Faker()
 class Block(models.Model):
     time_stamp = models.DateTimeField(auto_now_add=False)
     index = models.IntegerField(auto_created=True, blank=True)
-    data = models.TextField(blank=True,max_length=255)
+    data = models.TextField(blank=True, max_length=255)
     hash = models.CharField(max_length=255, blank=True)
     previous_hash = models.CharField(max_length=255)
     chain = models.ForeignKey(to='Chain', on_delete=models.CASCADE)
     nonce = models.CharField(max_length=255, default=0, blank=True)
-    salt = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.index)
+        return "Block " + str(self.index) + " on " + self.chain.name
 
     def __repr__(self):
         return '{}: {}'.format(self.index, str(self.hash)[:6])
@@ -60,7 +59,6 @@ class Block(models.Model):
         while not block.valid_hash():
             block.nonce = SymmetricEncryption.generate_salt(26)
         block.hash = block.__hash__()
-        # print(block.hash)
 
         # block.save()                # todo: remove
 
@@ -158,22 +156,25 @@ class Chain(models.Model):
 class Peer(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255, unique=True)
+
     def __str__(self):
         return self.name + "@" + self.address
+
     def __repr__(self):
         return '{}: {}'.format(self.name, self.address)
 
     def broadcast(self, chain_name, block):
         from .api.v0.serializers import BlockSerializer
         block_data = BlockSerializer(data=block.__dict__).as_json()
-        for peer in Peer.objects.all():
-            print("sending to ",peer)
+        for peer in Peer.objects.order_by('-id'):
+            # import pdb
+            # pdb.set_trace()
+            print("sending to ", peer)
             JsonApi.post(
                          peer.address,
                          reverse('mine-block',
                                  kwargs={'chain_name': chain_name}),
                          data=block_data)
-            break
 
     def query_latest_block(self, chain_name):
         from .api.v0.serializers import BlockSerializer
@@ -212,7 +213,6 @@ class Peer(models.Model):
         return sorted(chain, key=lambda x: x.index)
 
     def mine_block(self, chain_name, data, password=None):
-
         chain = Chain.objects.get(name=chain_name)
         if password is not None:
             data = EncryptionApi.encrypt(password, data)

@@ -21,16 +21,13 @@ class BlockCreateView(generics.CreateAPIView):
     serializer_class = BlockSerializer
 
     def create(self, request, *args, **kwargs):
-
         serializer = BlockSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         block = Block(**serializer.validated_data)
         block.chain, _ = Chain.objects.get_or_create(name=kwargs.get('chain_name'))
         print(block.is_valid_block(block.chain.last_block))
-        print("# ", block.hash)
-        print("salt ", block.nonce)
-        print("index ", block.index)
-        print("Prev # ", block.previous_hash)
+        print("# ", request.data)
+
 
         if not block.chain.is_valid_next_block(block):
             return Response({}, status=status.HTTP_304_NOT_MODIFIED)

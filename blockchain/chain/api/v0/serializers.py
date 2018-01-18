@@ -16,7 +16,7 @@ class BlockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Block
-        fields = ('hash', 'previous_hash', 'data', 'time_stamp', 'index', 'salt', 'nonce',)
+        fields = ('hash', 'previous_hash', 'data', 'time_stamp', 'index', 'nonce',)
 
     def as_json(self):
         self.is_valid()
