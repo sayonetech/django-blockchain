@@ -1,5 +1,6 @@
 # django-blockchain
-native Blockchain implementation using django and python
+native Blockchain implementation using django and python 
+Implemented p2p networking
 
 ## Contributing
 
