@@ -15,7 +15,7 @@ pycparser==2.18
 Pygments==2.2.0
 python-dateutil==2.6.1
 pytz==2017.3
-requests==2.18.4
+requests==2.20.0
 six==1.11.0
 text-unidecode==1.1
 ua-parser==0.3.6
