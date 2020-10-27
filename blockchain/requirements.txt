@@ -4,7 +4,7 @@ bpython==0.17
 certifi==2017.11.5
 cffi==1.11.4
 chardet==3.0.4
-cryptography==2.3
+cryptography==3.2
 curtsies==0.2.11
 Django==2.0.12
 djangorestframework==3.9.1
