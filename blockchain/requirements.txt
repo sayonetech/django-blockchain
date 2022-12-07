@@ -1,7 +1,7 @@
 asn1crypto==0.24.0
 blessings==1.6.1
 bpython==0.17
-certifi==2017.11.5
+certifi==2022.12.7
 cffi==1.11.4
 chardet==3.0.4
 cryptography==2.3
